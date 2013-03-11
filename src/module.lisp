@@ -105,7 +105,10 @@
   (gethash :routes (gethash (find-package package) *pkgmodules-traits*)))
 
 (defun pkgmodule-traits-modules (package)
-  (gethash :modules (gethash (find-package package) *pkgmodules-traits*)))
+  (gethash :modules
+	   (or (gethash (find-package package)
+			*pkgmodules-traits*)
+	       (return-from pkgmodule-traits-modules nil))))
 
 (defun pkgmodule-traits-references (package)
   (gethash :references (gethash (find-package package) *pkgmodules-traits*)))

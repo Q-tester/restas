@@ -23,9 +23,18 @@
    (additional-variables :initarg :additional-variables :initform nil)))
 
 (defun route-render-method (route)
-  (or (slot-value route 'render-method)
-      (module-render-method (route-module route))
-      #'identity))
+  (let* ((module (route-module route))
+	 (symbol (module-symbol module)))
+    (or (let* ((htab (pkgmodule-traits-modules (symbol-package symbol)))
+	       (element (if (hash-table-p htab)
+			    (nth 2
+				 (gethash symbol
+					  htab)))))
+	  (and (hash-table-p element)
+	       (gethash :render-method element)))
+	(slot-value route 'render-method)
+	(module-render-method module)
+	#'identity)))
 
 (defmethod routes:route-check-conditions :around ((route routes:base-route) bindings)
   (let ((*route* route))
