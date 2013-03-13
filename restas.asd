@@ -25,3 +25,15 @@
      ;; (:module "slime" 
      ;;          :components ((:file "restas-swank"))
      ;;          :depends-on ("src"))))
+
+(defsystem #:restas-test
+  :depends-on (#:restas #:fiveam #:drakma #:alexandria)
+  :components
+  ((:module "t"
+            :components
+            ((:file "suite" :depends-on ("test-routes-stage-1"))
+	     (:file "test-routes-stage-1")))))
+
+(defmethod perform ((o test-op) (c (eql (find-system '#:restas))))
+  (operate 'load-op '#:restas-test)
+  (funcall (intern "RUN-TESTING" :restas-test)))
