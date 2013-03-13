@@ -61,8 +61,7 @@
   (render-object nil file))
 
 (defmethod render-object ((designer function) (string string))
-  (declare (ignore designer))
-  (render-object nil string))
+  (funcall designer string))
 
 (defmethod render-object ((designer function) (octets vector))
   (declare (ignore designer))
