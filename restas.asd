@@ -31,8 +31,9 @@
   :components
   ((:module "t"
             :components
-            ((:file "suite" :depends-on ("test-routes-stage-1"))
-	     (:file "test-routes-stage-1")))))
+            ((:file "suite" :depends-on ("test-routes-stage-1" "mounted-module"))
+	     (:file "test-routes-stage-1" :depends-on ("mounted-module"))
+	     (:file "mounted-module")))))
 
 (defmethod perform ((o test-op) (c (eql (find-system '#:restas))))
   (operate 'load-op '#:restas-test)

@@ -46,3 +46,12 @@
 					 *host*
 					 "renderer-test"))
 	    "<h1>Hello world!</h1>")))
+
+(test mounted-module
+  (route-subtest "mount-test/" "<h1>Hello mounted world!</h1>"))
+
+(test renderer-of-mounted-module
+  (route-subtest "mount-test/renderer-test"
+		 "<h1>Hello mounted and rendered world!</h1>"))
+
+

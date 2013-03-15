@@ -13,3 +13,6 @@
 		    (format nil "<h1>~a</h1>"
 			    str)))
   "Hello world!")
+
+(restas:mount-module -mount-test- (#:restas-test-mounted-module)
+  (:url "mount-test"))
