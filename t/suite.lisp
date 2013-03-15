@@ -1,5 +1,7 @@
 (defpackage :restas-test
-  (:use :cl :5am))
+  (:use :cl :5am)
+  (:export :run-testing
+	   :*debug-obj*))
 
 (in-package :restas-test)
 
@@ -19,7 +21,19 @@
 
 (defun run-testing ()
   (start-test-platform)
-  (5am:run! 'stage-1))
+  (5am:run! 'stage-1)
+  (restas:stop-all))
+
+(defvar *debug-obj*)
+
+(defun route-subtest (http-path model-content)
+  "To invoke only in test environment" 
+  (is-true
+   (string= (setf *debug-obj*
+		  (drakma:http-request (format nil "~a~a"
+					       *host*
+					       http-path)))
+	    model-content)))
 
 (test get-request
   (is-true
